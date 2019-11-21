@@ -21,21 +21,30 @@ public class MainClass{
 		new HashMap(){{
 			put("question","1+2=?");
 			put("answer","3");
+			put("hint1","hint1:three");
+			put("hint2","hint2:third");
 		}},
 		new HashMap(){{
-			put("question","11+22=?");
-			put("answer","33");
+			put("question","25+15=?");
+			put("answer","40");
+			put("hint1","hint1:forty");
+			put("hint2","hint2:40");
 		}},
 		new HashMap(){{
 			put("question","4+6=?");
 			put("answer","10");
+			put("hint1","hint1:ten");
+			put("hint2","hint2:x");
 		}}
 
 	};
 	int problemNumber = 0;
 	String question = "";
 	String answer = "";
+	String hint1 = "";
+	String hint2 = "";
 	int score = 0;
+	int incorrect = 0;
 
 	int totalCorrect = 0;
 
@@ -108,6 +117,8 @@ public class MainClass{
 					sendToClient("server : game start!!");
 					question = (String)problems[0].get("question");
 					answer = (String)problems[0].get("answer");
+					hint1 = (String)problems[0].get("hint1");
+					hint2 = (String)problems[0].get("hint2");
 					problemNumber++;
 					sendToClient("problem1 : "+question);
 				}
@@ -179,11 +190,34 @@ public class MainClass{
 						//give new question	to users
 						question = (String)problems[problemNumber].get("question");
 						answer = (String)problems[problemNumber].get("answer");
+						hint1 = (String)problems[problemNumber].get("hint1");
+						hint2 = (String)problems[problemNumber].get("hint2");
 						problemNumber++;
-						sendToClient("test answer | "+question);
+						sendToClient("answer | "+question);
+						incorrect = 0;
 					}
 					else{
-						sendToClient(nickName+" try again!");
+						sendToClient(nickName+" wrong answer!");
+						incorrect++;
+			
+						if(incorrect == 2){
+							sendToClient("try again! "+hint1);
+						}
+						else if(incorrect == 4){
+							sendToClient("try again! "+hint2);
+						}
+			
+						else if(incorrect == 10){
+							sendToClient("No one can guess");
+							//give new question	to users
+							question = (String)problems[problemNumber].get("question");
+							answer = (String)problems[problemNumber].get("answer");
+							hint1 = (String)problems[problemNumber].get("hint1");
+							hint2 = (String)problems[problemNumber].get("hint2");
+							problemNumber++;
+							sendToClient("answer | "+question);
+							incorrect = 0;
+						}
 					}
 				}
 	
