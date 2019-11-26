@@ -8,8 +8,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="361dp"
-        android:layout_height="383dp"
+        android:layout_width="365dp"
+        android:layout_height="297dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,15 +43,40 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:hint="NickName" />
+            android:hint="NickName"
+            android:inputType="textPersonName" />
 
         <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Connection"
-            android:onClick="btnMethod"/>
+            android:onClick="btnMethod"
+            android:text="Connection" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/TopText"
+        android:layout_width="355dp"
+        android:layout_height="55dp"
+        android:gravity="center"
+        android:text="Quiz_App"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/FirstPlace"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/FirstPlace"
+        android:layout_width="355dp"
+        android:layout_height="55dp"
+        android:gravity="center"
+        android:text="Welcome!"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

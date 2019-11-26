@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout container;
     ScrollView scroll;
     ProgressDialog pro;
+    TextView toptext;
+    TextView firstplace;
 
     boolean isRunning=false;
 
@@ -46,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
         btn1 = findViewById(R.id.button);
         container = findViewById(R.id.container);
         scroll = findViewById(R.id.scroll);
-
-
+        toptext = findViewById(R.id.TopText);
+        firstplace = findViewById(R.id.FirstPlace);
     }
 
 
@@ -136,9 +138,21 @@ public class MainActivity extends AppCompatActivity {
                             tv.setTextSize(TypedValue.COMPLEX_UNIT_SP,22);
 
                             if(msg.startsWith(user_nickname)){
+                                if(msg.contains("Question")||msg.contains("Hint")){
+                                    toptext.setText(msg);
+                                }
+                                if(msg.contains("first")){
+                                    firstplace.setText(msg);
+                                }
                                 tv.setBackgroundResource(R.drawable.me);
                             }
                             else{
+                                if(msg.contains("Question")||msg.contains("Hint")){
+                                    toptext.setText(msg);
+                                }
+                                if(msg.contains("First")){
+                                    firstplace.setText(msg);
+                                }
                                 tv.setBackgroundResource(R.drawable.you);
                             }
                             tv.setText(msg);
