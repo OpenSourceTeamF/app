@@ -21,20 +21,20 @@ public class MainClass{
 		new HashMap(){{
 			put("question","1+2=?");
 			put("answer","3");
-			put("hint1","hint1:three");
-			put("hint2","hint2:third");
+			put("hint1","three");
+			put("hint2","third");
 		}},
 		new HashMap(){{
 			put("question","25+15=?");
 			put("answer","40");
-			put("hint1","hint1:forty");
-			put("hint2","hint2:40");
+			put("hint1","forty");
+			put("hint2","40");
 		}},
 		new HashMap(){{
 			put("question","4+6=?");
 			put("answer","10");
-			put("hint1","hint1:ten");
-			put("hint2","hint2:x");
+			put("hint1","ten");
+			put("hint2","x");
 		}}
 
 	};
@@ -45,6 +45,8 @@ public class MainClass{
 	String hint2 = "";
 	int score = 0;
 	int incorrect = 0;
+	String  winner;
+	int w_score;
 
 	int totalCorrect = 0;
 
@@ -106,21 +108,21 @@ public class MainClass{
 
 				String nickName=dis.readUTF();
 
-				dos.writeUTF("server : Welcome "+nickName+"!");
-				sendToClient("server : "+nickName+" is connected");
+				dos.writeUTF("[server] Welcome "+nickName+"!");
+				sendToClient("[server] "+nickName+" is connected");
 
 				UserClass user = new UserClass(nickName,socket,score);
 				user.start();
 				user_list.add(user);
 	
 				if(user_list.size()==2){
-					sendToClient("server : game start!!");
+					sendToClient("[server] game start!!");
 					question = (String)problems[0].get("question");
 					answer = (String)problems[0].get("answer");
 					hint1 = (String)problems[0].get("hint1");
 					hint2 = (String)problems[0].get("hint2");
 					problemNumber++;
-					sendToClient("problem1 : "+question);
+					sendToClient("Question | "+question);
 				}
 				
 	
@@ -156,15 +158,15 @@ public class MainClass{
 			try{
 				while(true){
 					
-
 					String msg = dis.readUTF();
-					sendToClient(nickName+" : "+msg);
+					sendToClient("["+nickName+"] "+msg);
 
 					if(msg.equals(answer)){
 						score++;
-						sendToClient(nickName+" Correct! score : "+score);
+						sendToClient("[server] "+nickName+" Correct! score : "+score);
 			
 						if(problemNumber == 3){
+							/*
 							Quiz test = new Quiz(nickName,socket,score);
 							test.start();
 
@@ -183,9 +185,20 @@ public class MainClass{
 							}
 							else{
 								sendToClient(user0+"win!!");
-							}
+							}*/
 							problemNumber = 0;
 						}
+
+						//define first place
+						w_score = 0;
+						for(int i=0;i<user_list.size();i++){
+							if(user_list.get(i).score > w_score){
+								winner = user_list.get(i).nickName;
+								w_score = user_list.get(i).score;
+							}
+						}
+						sendToClient("First Place : "+winner+"(score : "+w_score+")");
+
 
 						//give new question	to users
 						question = (String)problems[problemNumber].get("question");
@@ -193,29 +206,29 @@ public class MainClass{
 						hint1 = (String)problems[problemNumber].get("hint1");
 						hint2 = (String)problems[problemNumber].get("hint2");
 						problemNumber++;
-						sendToClient("answer | "+question);
+						sendToClient("Question | "+question);
 						incorrect = 0;
 					}
 					else{
-						sendToClient(nickName+" wrong answer!");
+						sendToClient("[server] "+nickName+" Wrong answer!");
 						incorrect++;
 			
 						if(incorrect == 2){
-							sendToClient("try again! "+hint1);
+							sendToClient("Hint | "+hint1);
 						}
 						else if(incorrect == 4){
-							sendToClient("try again! "+hint2);
+							sendToClient("Hint | "+hint2);
 						}
 			
 						else if(incorrect == 10){
-							sendToClient("No one can guess");
+							sendToClient("[server] No one can guess");
 							//give new question	to users
 							question = (String)problems[problemNumber].get("question");
 							answer = (String)problems[problemNumber].get("answer");
 							hint1 = (String)problems[problemNumber].get("hint1");
 							hint2 = (String)problems[problemNumber].get("hint2");
 							problemNumber++;
-							sendToClient("answer | "+question);
+							sendToClient("Question | "+question);
 							incorrect = 0;
 						}
 					}
