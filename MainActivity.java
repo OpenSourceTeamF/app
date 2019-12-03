@@ -1,4 +1,4 @@
-package com.example.chat_app;
+package com.example.quiz_app;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
