@@ -164,6 +164,7 @@ public class MainClass{
 			}catch(Exception e){e.printStackTrace();}
 		}
 	}
+	
 	class UserClass extends Thread{
 		int score;
 		String nickName;
@@ -249,25 +250,7 @@ public class MainClass{
 			}catch(Exception e){e.printStackTrace();}
 		}
 	}	
-	class Quiz extends Thread{
-		String nickName;
-		Socket socket;
-		int score;
 	
-		public Quiz(String nickName, Socket socket,int score){
-			try{
-				this.nickName = nickName;
-				this.socket = socket;
-				this.score = score;
-			}catch(Exception e){e.printStackTrace();}
-		}
-		
-		public void run(){
-			try{
-				sendToClient("[Test]"+nickName+" score : "+score);
-			}catch(Exception e){e.printStackTrace();}
-		}
-	}
 
 	public synchronized void sendToClient(String msg){
 		try{
