@@ -23,29 +23,7 @@ public class MainClass{
 	private ServerSocket server;
 
 	ArrayList<UserClass> user_list;
-/*
-	HashMap[] problems = {
-		new HashMap(){{
-			put("question","1+2=?");
-			put("answer","3");
-			put("hint1","three");
-			put("hint2","third");
-		}},
-		new HashMap(){{
-			put("question","25+15=?");
-			put("answer","40");
-			put("hint1","forty");
-			put("hint2","40");
-		}},
-		new HashMap(){{
-			put("question","4+6=?");
-			put("answer","10");
-			put("hint1","ten");
-			put("hint2","x");
-		}}
 
-	};
-*/
 	String question = "";
 	String answer = "";
 	String hint1 = "";
@@ -65,7 +43,6 @@ public class MainClass{
 		
 		XSSFRow row;
 		XSSFCell cell;
-		String[][] tmp = new String [6][101];
 			
 		try {
 			FileInputStream inputStream = new FileInputStream("C:\\Users\\DKU\\Desktop\\jinho\\Invention Open Source.xlsx");
@@ -106,25 +83,22 @@ public class MainClass{
 									break;
 								default:
 								}
-			//					System.out.print(value + "\t");
-								tmp[c][r] = value;
+
 								table[c][r] = value;
-			//					System.out.print(table[c][r] + "\t");
+
 							} 
 							else {
-			//					System.out.print("[null]\t");
+
 							}
 						} 
-			//			System.out.print("\n");
+
 					}
 				} 
 			}
 			} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		new MainClass();	
-		System.out.print(table[5][5]);
 	}		
 
 
@@ -132,10 +106,8 @@ public class MainClass{
 		try{
 			user_list=new ArrayList<UserClass>();
 			server=new ServerSocket(30000);
-
 			ConnectionThread thread= new ConnectionThread();
 			thread.start();
-
 
 		}catch(Exception e){e.printStackTrace();}
 	}
@@ -154,7 +126,6 @@ public class MainClass{
 					Socket socket=server.accept();
 					System.out.println("user connected");
 					NickNameThread thread = new NickNameThread(socket);
-
 					thread.start();
 				}
 			}catch(Exception e){e.printStackTrace();}
@@ -164,7 +135,6 @@ public class MainClass{
 
 	class NickNameThread extends Thread{
 		private Socket socket;
-
 		public NickNameThread(Socket socket){
 			this.socket=socket;	
 		}		
@@ -175,16 +145,12 @@ public class MainClass{
 				OutputStream os = socket.getOutputStream();
 				DataInputStream dis = new DataInputStream(is);
 				DataOutputStream dos = new DataOutputStream(os);
-
 				String nickName=dis.readUTF();
-
 				dos.writeUTF("[server] Welcome "+nickName+"!");
 				sendToClient("[server] "+nickName+" is connected");
-
 				UserClass user = new UserClass(nickName,socket,score);
 				user.start();
 				user_list.add(user);
-	
 				if(user_list.size()==2){
 					sendToClient("[server] game start!!");
 					question = table[2][1];
@@ -194,23 +160,16 @@ public class MainClass{
 					hint3 = table[5][1];
 					problemNumber++;
 					sendToClient("Question | "+question);
-				}
-				
-	
+				}	
 			}catch(Exception e){e.printStackTrace();}
-
 		}
-
 	}
-
-
 	class UserClass extends Thread{
 		int score;
 		String nickName;
 		Socket socket;
 		DataInputStream dis;
 		DataOutputStream dos;
-
 		public UserClass(String nickName, Socket socket,int score){
 			try{
 				this.nickName = nickName;
@@ -287,15 +246,9 @@ public class MainClass{
 						}
 					}
 				}
-
 			}catch(Exception e){e.printStackTrace();}
-
 		}
-
-
 	}	
-
-
 	class Quiz extends Thread{
 		String nickName;
 		Socket socket;
@@ -316,17 +269,11 @@ public class MainClass{
 		}
 	}
 
-
 	public synchronized void sendToClient(String msg){
 		try{
 			for(UserClass user : user_list){
 				user.dos.writeUTF(msg);
 			}
-
 		}catch(Exception e){e.printStackTrace();}
-
-	}
-
-
-	
+	}	
 }
