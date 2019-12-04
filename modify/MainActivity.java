@@ -10,12 +10,11 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-
-import com.example.quiz_app.R;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -36,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     TextView toptext3;
     TextView toptext4;
     TextView firstplace;
+    ImageView image_guess;
 
     boolean isRunning=false;
 
@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         toptext3 = findViewById(R.id.TopText3);
         toptext4 = findViewById(R.id.TopText4);
         firstplace = findViewById(R.id.FirstPlace);
+        image_guess = findViewById(R.id.Guess);
     }
 
 
@@ -65,14 +66,15 @@ public class MainActivity extends AppCompatActivity {
         if(!isConnect){
             String nickName = edit1.getText().toString();
             if(nickName.length()>0 && nickName != null){
+                image_guess.setVisibility(View.INVISIBLE);
                 pro = ProgressDialog.show(this, null, "connecting...");
-
                 ConnectionThread thread = new ConnectionThread();
                 thread.start();
             }
 
             else{
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                image_guess.setVisibility(View.VISIBLE);
                 builder.setMessage("Input your NickName");
                 builder.setPositiveButton("Check",null);
                 builder.show();
@@ -115,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
                         isRunning = true;
 
                         MessageThread thread = new MessageThread(socket);
+
                         thread.start();
                     }
                 });
