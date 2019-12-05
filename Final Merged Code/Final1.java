@@ -101,7 +101,7 @@ public class Final1 extends Final2{
 					hint2 = table[4][1];
 					hint3 = table[5][1];
 					problemNumber++;
-					sendToClient("Question | "+question);
+					sendToClient("[Hint1]\n"+question);
 				}	
 			}catch(Exception e){e.printStackTrace();}
 		}
@@ -158,7 +158,7 @@ public class Final1 extends Final2{
 						hint1 = table[3][problemNumber];
 						hint2 = table[4][problemNumber];
 						hint3 = table[5][problemNumber];
-						sendToClient("Question | "+question);
+						sendToClient("[Hint1] "+question);
 						incorrect = 0;
 						}
 					else{
@@ -166,14 +166,17 @@ public class Final1 extends Final2{
 						incorrect++;
 			
 						if(incorrect == 2){
-							sendToClient("Hint | "+hint1);
+							sendToClient("[Hint2]\n"+hint1);
 						}
 						else if(incorrect == 4){
-							sendToClient("Hint | "+hint2);
+							sendToClient("[Hint3] | "+hint2);
+						}
+						else if(incorrect == 6) {
+							sendToClient("[Hint4] |"+hint3);
 						}
 			
 						else if(incorrect == 10){
-							sendToClient("[server] No one can guess");
+							sendToClient("[server] No one can guess!!");
 							problemNumber++;
 							if(problemNumber==100)
 							{
@@ -184,7 +187,7 @@ public class Final1 extends Final2{
 							hint1 = table[3][problemNumber];
 							hint2 = table[4][problemNumber];
 							hint3 = table[5][problemNumber];
-							sendToClient("Question | "+question);
+							sendToClient("[Hint1]\n"+question);
 							incorrect = 0;
 						}
 					}
