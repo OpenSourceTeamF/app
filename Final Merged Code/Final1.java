@@ -158,7 +158,7 @@ public class Final1 extends Final2{
 						hint1 = table[3][problemNumber];
 						hint2 = table[4][problemNumber];
 						hint3 = table[5][problemNumber];
-						sendToClient("[Hint1] "+question);
+						sendToClient("[Hint1]\n"+question);
 						incorrect = 0;
 						}
 					else{
